@@ -27,12 +27,12 @@ class MyGame extends Phaser.Scene {
 const config = {
   type: Phaser.AUTO,
   scale: {
-    parent: 'GGJ 2021 - Find Me!',
+    parent: 'ggj2021-app',
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 1920,
-    height: 1080
+    width: window.innerWidth,
+    height: window.innerHeight
   },
+  backgroundColor: Phaser.Display.Color.RGBStringToColor('rgb(0,0,0)'),
   scene: MyGame
 }
 
