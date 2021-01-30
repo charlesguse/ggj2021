@@ -12,6 +12,8 @@ class MyGame extends Phaser.Scene {
     
   create () {
     const logo = this.add.image(400, 150, 'logo')
+
+    logo.setInteractive() // Track this object
     
     this.tweens.add({
       targets: logo,
@@ -21,6 +23,12 @@ class MyGame extends Phaser.Scene {
       yoyo: true,
       loop: -1
     })
+
+    this.input.on('gameobjectdown', this.onObjectClicked)
+  }
+
+  onObjectClicked(pointer, gameObject) {
+    gameObject.angle += 10
   }
 }
 
