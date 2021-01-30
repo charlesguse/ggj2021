@@ -1,16 +1,12 @@
-export const gameCharacters = (scene) => {
-  return scene.add.circle(randomX(), randomY(), 10, randomColor())
-}
-
-function randomX() {
+export function randomX() {
   return Math.floor(Math.random() * window.innerWidth)
 }
 
-function randomY() {
+export function randomY() {
   return Math.floor(Math.random() * window.innerHeight)
 }
 
-function randomColor() {
+export function randomColor() {
   let color = '0x'
 
   for (let i = 0; i < 6; i++) {
