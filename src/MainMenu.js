@@ -173,7 +173,6 @@ export default class MainMenu extends Phaser.Scene {
 
   startPreloadInTheBackground() {
     console.log("[EPT] Starting background loading...");
-    this.load.image("img/clickme");
     this.load.once("filecomplete", this.addFiles, this);
     this.load.start();
   }
@@ -181,66 +180,53 @@ export default class MainMenu extends Phaser.Scene {
   addFiles() {
     var resources = {
       image: [
-        ["clickme", "img/clickme.png"],
-        ["overlay", "img/overlay.png"],
-        ["button-beer", "img/button-beer.png"],
-        ["banner-beer", "img/banner-beer.png"],
-        ["particle", "img/particle.png"],
+        ["overlay", require("./assets/images/overlay.png")],
+        ["particle", require("./assets/images/particle.png")],
       ],
       spritesheet: [
         [
           "button-continue",
-          "img/button-continue.png",
+          require("./assets/images/button-continue.png"),
           { frameWidth: 180, frameHeight: 180 },
         ],
         [
           "button-mainmenu",
-          "img/button-mainmenu.png",
+          require("./assets/images/button-mainmenu.png"),
           { frameWidth: 180, frameHeight: 180 },
         ],
         [
           "button-restart",
-          "img/button-tryagain.png",
+          require("./assets/images/button-tryagain.png"),
           { frameWidth: 180, frameHeight: 180 },
         ],
         [
-          "button-achievements",
-          "img/button-achievements.png",
-          { frameWidth: 110, frameHeight: 110 },
-        ],
-        [
           "button-pause",
-          "img/button-pause.png",
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-credits",
-          "img/button-credits.png",
+          require("./assets/images/button-pause.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
         [
           "button-sound-on",
-          "img/button-sound-on.png",
+          require("./assets/images/button-sound-on.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
         [
           "button-sound-off",
-          "img/button-sound-off.png",
+          require("./assets/images/button-sound-off.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
         [
           "button-music-on",
-          "img/button-music-on.png",
+          require("./assets/images/button-music-on.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
         [
           "button-music-off",
-          "img/button-music-off.png",
+          require("./assets/images/button-music-off.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
         [
           "button-back",
-          "img/button-back.png",
+          require("./assets/images/button-back.png"),
           { frameWidth: 70, frameHeight: 70 },
         ],
       ],
