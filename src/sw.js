@@ -56,7 +56,7 @@ var appShellFiles = [
   './img/logo-enclave.png',
   './img/overlay.png',
   './img/particle.png',
-  './img/pattern.png',
+  './assets/img/pattern.png',
   './img/title.png'
 ];
 
