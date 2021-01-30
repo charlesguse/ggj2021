@@ -1,40 +1,52 @@
 import Phaser from 'phaser';
-import { gameCharacters } from './gameBoardCharacters'
+import Boot from './Boot'
+import Preloader from './Preloader'
+import MainMenu from './MainMenu'
+import Settings from './Settings'
+import Story from './Story'
+import Game from './Game'
+import MyGame from './MyGame'
 
-class MyGame extends Phaser.Scene {
-  constructor () {
-    super()
-  }
-    
-  create () {
-    const characterRefs = []
-
-    for (let i = 0; i < 1000; i++) {
-      const character = gameCharacters(this)
-      character.setInteractive()
-      characterRefs.push(character)
-    }
-
-    console.log(characterRefs)
-
-    this.input.on('gameobjectdown', this.onObjectClicked)
-  }
-
-  onObjectClicked(pointer, gameObject) {
-    gameObject.x += 10
-  }
+var enablePWA = false;
+if(enablePWA) {
+	// SERVICE WORKER
+	if('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./js/sw.js');
+	};
+	// NOTIFICATIONS TEMPLATE
+	Notification.requestPermission().then(function(result) {
+		if(result === 'granted') {
+			exampleNotification();
+		}
+	});
+	function exampleNotification() {
+		var notifTitle = 'Enclave Phaser Template';
+		var notifBody = 'Created by the Enclave Games team.';
+		var notifImg = 'img/icons/icon-512.png';
+		var options = {
+			body: notifBody,
+			icon: notifImg
+		}
+		var notif = new Notification(notifTitle, options);
+		setTimeout(exampleNotification, 30000);
+	}
 }
 
-const config = {
-  type: Phaser.AUTO,
-  scale: {
-    parent: 'ggj2021-app',
-    mode: Phaser.Scale.FIT,
-    width: window.innerWidth,
-    height: window.innerHeight
-  },
-  backgroundColor: Phaser.Display.Color.RGBStringToColor('rgb(0,0,0)'),
-  scene: MyGame
+var gameConfig = {
+	scale: {
+		parent: 'ggj2021-app',
+		mode: Phaser.Scale.FIT,
+		autoCenter: Phaser.Scale.CENTER_BOTH,
+		width: 640,
+		height: 960
+	},
+	scene: [Boot, Preloader, MainMenu, Settings, Story, Game]
 }
+const game = new Phaser.Game(gameConfig);
+window.focus();
 
-const game = new Phaser.Game(config)
+// Usage tracking
+// window.dataLayer = window.dataLayer || [];
+// function gtag(){dataLayer.push(arguments);}
+// gtag('js', new Date());
+// gtag('config', 'UA-30485283-26');
