@@ -37,19 +37,18 @@ export default class Preloader extends Phaser.Scene {
     });
 
     var resources = {
-      image: [["title", "img/title.png"]],
       spritesheet: [
         [
           "button-start",
-          "img/button-start.png",
+          require("./assets/images/button-start.png"),
           { frameWidth: 180, frameHeight: 180 },
         ],
         [
           "button-settings",
-          "img/button-settings.png",
+          require("./assets/images/button-settings.png"),
           { frameWidth: 80, frameHeight: 80 },
         ],
-        ["loader", "img/loader.png", { frameWidth: 45, frameHeight: 45 }],
+        ["loader", require("./assets/images/loader.png"), { frameWidth: 45, frameHeight: 45 }],
       ],
     };
     for (var method in resources) {
