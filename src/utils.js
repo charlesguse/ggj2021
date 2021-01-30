@@ -17,6 +17,7 @@ EPT.Sfx = {
           if(!EPT.Sfx.music || !EPT.Sfx.music.isPlaying) {
             EPT.Sfx.music = game.sound.add('music-theme');
             EPT.Sfx.music.volume = 0.5;
+            EPT.Sfx.music.stop();
           }
         }
 				break;
