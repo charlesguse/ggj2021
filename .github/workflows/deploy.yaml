@@ -24,6 +24,7 @@ jobs:
           aws-region: us-east-1
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
+        continue-on-error: true
         with:
           name: ${{ env.AWS_CFN_STACK_NAME }}
           template: template.yaml
@@ -33,8 +34,8 @@ jobs:
       - name: Deploy Assets
         run: |
           S3URI=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='SourceS3Uri'].OutputValue" --output text)
-          aws s3 sync ./dist ${S3URI}
-      - name: CloudFr
+          aws s3 sync ./dist ${S3URI} --delete
+      - name: CloudFront Url
         run: |
           URL=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='FrontendUrl'].OutputValue" --output text)
           echo $URL
