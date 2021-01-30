@@ -24,7 +24,7 @@ jobs:
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: $AWS_CFN_STACK_NAME
+          name: ${{ AWS_CFN_STACK_NAME }}
           template: template.yaml
           # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
       - name: Build Assets
