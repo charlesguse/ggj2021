@@ -6,6 +6,7 @@ jobs:
   deploy:
     env:
         AWS_CFN_STACK_NAME: ggj2021
+        AWS_CFN_DOMAIN: ggj2019.charlieguse.com
     name: Publish to S3
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -26,14 +27,14 @@ jobs:
         with:
           name: ${{ env.AWS_CFN_STACK_NAME }}
           template: template.yaml
-          # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
+          parameter-overrides: "Domain=${{ env.AWS_CFN_DOMAIN }},HostedZoneId=${{ secrets.HOSTED_ZONE_ID }}"
       - name: Build Assets
         run: npm run build
       - name: Deploy Assets
         run: |
           S3URI=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='SourceS3Uri'].OutputValue" --output text)
           aws s3 sync ./dist ${S3URI}
-      - name: Deploy Assets
+      - name: CloudFr
         run: |
           URL=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='FrontendUrl'].OutputValue" --output text)
           echo $URL
