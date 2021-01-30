@@ -39,3 +39,6 @@ jobs:
         run: |
           URL=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='FrontendUrl'].OutputValue" --output text)
           echo $URL
+      - name: Hosted Domain Url
+        run: |
+          echo https://${{ env.AWS_CFN_DOMAIN }}
