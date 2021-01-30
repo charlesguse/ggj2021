@@ -7,7 +7,7 @@ jobs:
     env:
         AWS_CFN_STACK_NAME: ggj2021
     name: Publish to S3
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
