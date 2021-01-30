@@ -52,30 +52,6 @@ export default class Game extends Phaser.Scene {
     this._gamePaused = false;
     this._runOnce = false;
 
-    // this.buttonDummy = new Button(
-    //   EPT.world.centerX,
-    //   EPT.world.centerY,
-    //   "clickme",
-    //   this.addPoints,
-    //   this,
-    //   "static"
-    // );
-    // this.buttonDummy.setOrigin(0.5, 0.5);
-    // this.buttonDummy.setAlpha(0);
-    // this.buttonDummy.setScale(0.1);
-    // this.tweens.add({
-    //   targets: this.buttonDummy,
-    //   alpha: 1,
-    //   duration: 500,
-    //   ease: "Linear",
-    // });
-    // this.tweens.add({
-    //   targets: this.buttonDummy,
-    //   scale: 1,
-    //   duration: 500,
-    //   ease: "Back",
-    // });
-
     this.initUI();
 
     this.currentTimer = this.time.addEvent({
@@ -127,11 +103,12 @@ export default class Game extends Phaser.Scene {
   managePause() {
     this._gamePaused = !this._gamePaused;
     this.currentTimer.paused = !this.currentTimer.paused;
-    EPT.Sfx.play("click");
+
+    const clickSound = this.sound.add('sound-click')
+    clickSound.play()
+
     if (this._gamePaused) {
       EPT.fadeOutIn(function (self) {
-        // self.buttonPause.input.enabled = false;
-        // self.buttonDummy.input.enabled = false;
         self.stateStatus = "paused";
         self._runOnce = false;
       }, this);
@@ -192,8 +169,6 @@ export default class Game extends Phaser.Scene {
     EPT.Storage.setHighscore("EPT-highscore", this._score);
     EPT.fadeOutIn(function (self) {
       self.screenGameoverGroup.toggleVisible();
-      // self.buttonPause.input.enabled = false;
-      // self.buttonDummy.input.enabled = false;
       self.screenGameoverScore.setText(
         EPT.text["gameplay-score"] + self._score
       );
@@ -388,12 +363,16 @@ export default class Game extends Phaser.Scene {
   }
 
   stateRestart() {
-    EPT.Sfx.play("click");
+    const clickSound = this.sound.add('sound-click')
+    clickSound.play()
+
     EPT.fadeOutScene("Game", this);
   }
 
   stateBack() {
-    EPT.Sfx.play("click");
+    const clickSound = this.sound.add('sound-click')
+    clickSound.play()
+
     EPT.fadeOutScene("MainMenu", this);
   }
 
@@ -407,11 +386,13 @@ export default class Game extends Phaser.Scene {
         delay: 250,
         onUpdateScope: this,
         onCompleteScope: this,
+
         onUpdate: function () {
           this.screenGameoverScore.setText(
             EPT.text["gameplay-score"] + Math.floor(this.pointsTween.getValue())
           );
         },
+
         onComplete: function () {
           var emitter = this.add.particles("particle").createEmitter({
             x: this.screenGameoverScore.x + 30,
