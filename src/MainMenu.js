@@ -120,34 +120,47 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   clickSettings() {
+    console.log('settings 1')
     if (this.bgFilesLoaded) {
+      console.log('settings 2')
       EPT.Sfx.play("click");
+      console.log('settings 3')
       if (this.loadImage) {
+        console.log('settings 4')
         this.loadImage.destroy();
       }
+      console.log('settings 5')
       EPT.fadeOutScene("Settings", this);
+      console.log('settings 6')
     } else {
+      console.log('settings 8')
       var animationFrames = this.anims.generateFrameNumbers("loader");
+      console.log('settings 9')
       animationFrames.pop();
+      console.log('settings 10')
       this.waitingForSettings = true;
+      console.log('settings 11')
       this.buttonSettings.setAlpha(0.1);
+      console.log('settings 12')
       var loadAnimation = this.anims.create({
         key: "loading",
         frames: animationFrames,
         frameRate: 12,
         repeat: -1,
       });
+      console.log('settings 13')
       this.loadImage = this.add
-        .sprite(30, 30, "loader")
-        .setOrigin(0, 0)
-        .setScale(1.25);
+      .sprite(30, 30, "loader")
+      .setOrigin(0, 0)
+      .setScale(1.25);
       this.loadImage.play("loading");
+      console.log('settings 14')
     }
   }
 
   clickStart() {
     if (this.bgFilesLoaded) {
-      // EPT.Sfx.play("click");
+      EPT.Sfx.play("click");
       if (this.loadImage) {
         this.loadImage.destroy();
       }
@@ -230,24 +243,24 @@ export default class MainMenu extends Phaser.Scene {
           { frameWidth: 70, frameHeight: 70 },
         ],
       ],
-      // audio: [
-      //   [
-      //     "sound-click",
-      //     [
-      //       "sfx/audio-button.m4a",
-      //       "sfx/audio-button.mp3",
-      //       "sfx/audio-button.ogg",
-      //     ],
-      //   ],
-      //   [
-      //     "music-theme",
-      //     [
-      //       "sfx/music-bitsnbites-liver.m4a",
-      //       "sfx/music-bitsnbites-liver.mp3",
-      //       "sfx/music-bitsnbites-liver.ogg",
-      //     ],
-      //   ],
-      // ],
+      audio: [
+        [
+          "sound-click",
+          [
+            "sfx/audio-button.m4a",
+            "sfx/audio-button.mp3",
+            "sfx/audio-button.ogg",
+          ],
+        ],
+        [
+          "music-theme",
+          [
+            "sfx/music-bitsnbites-liver.m4a",
+            "sfx/music-bitsnbites-liver.mp3",
+            "sfx/music-bitsnbites-liver.ogg",
+          ],
+        ],
+      ],
     };
     for (var method in resources) {
       resources[method].forEach(function (args) {
