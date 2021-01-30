@@ -147,7 +147,7 @@ export default class MainMenu extends Phaser.Scene {
 
   clickStart() {
     if (this.bgFilesLoaded) {
-      EPT.Sfx.play("click");
+      // EPT.Sfx.play("click");
       if (this.loadImage) {
         this.loadImage.destroy();
       }
@@ -174,9 +174,7 @@ export default class MainMenu extends Phaser.Scene {
   startPreloadInTheBackground() {
     console.log("[EPT] Starting background loading...");
     this.load.once("filecomplete", this.addFiles, this);
-    console.log('bg loading 1')
     this.load.start();
-    console.log('bg loading 2')
   }
   
   addFiles() {
@@ -232,24 +230,24 @@ export default class MainMenu extends Phaser.Scene {
           { frameWidth: 70, frameHeight: 70 },
         ],
       ],
-      audio: [
-        [
-          "sound-click",
-          [
-            "sfx/audio-button.m4a",
-            "sfx/audio-button.mp3",
-            "sfx/audio-button.ogg",
-          ],
-        ],
-        [
-          "music-theme",
-          [
-            "sfx/music-bitsnbites-liver.m4a",
-            "sfx/music-bitsnbites-liver.mp3",
-            "sfx/music-bitsnbites-liver.ogg",
-          ],
-        ],
-      ],
+      // audio: [
+      //   [
+      //     "sound-click",
+      //     [
+      //       "sfx/audio-button.m4a",
+      //       "sfx/audio-button.mp3",
+      //       "sfx/audio-button.ogg",
+      //     ],
+      //   ],
+      //   [
+      //     "music-theme",
+      //     [
+      //       "sfx/music-bitsnbites-liver.m4a",
+      //       "sfx/music-bitsnbites-liver.mp3",
+      //       "sfx/music-bitsnbites-liver.ogg",
+      //     ],
+      //   ],
+      // ],
     };
     for (var method in resources) {
       resources[method].forEach(function (args) {
