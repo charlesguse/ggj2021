@@ -1,4 +1,33 @@
-# Phaser 3 Webpack Project Template
+# GGJ 2021 - Find Me!
+
+Game for South Bend Global Game Jam 2021 made by Michael J and Charlie G.
+
+## Todo
+
+- ~~Creating temp game objects that we can interact with~~
+
+  - ~~Programmatically add them~~
+  - ~~Click events work for each specific game object~~
+  - ~~Find a way to spread them randomly across the screen~~
+  - Replace temp objects with images (pixel art?)
+  
+- Build background
+
+  - Use open art to build the background
+  - Create restricted areas where random game objects can't be added
+
+- Win conditions
+
+  - Who/what do you have to find to win the game?
+  - Basic win screen
+  - Maybe include timer of how long it took?
+
+- Menu screen
+
+  - Basic menu screen that explains the game
+  - Start button to begin the game
+
+## Phaser 3 Webpack Project Template
 
 A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
 

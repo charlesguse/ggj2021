@@ -1,34 +1,27 @@
 import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
+import { gameCharacters } from './gameBoardCharacters'
 
 class MyGame extends Phaser.Scene {
   constructor () {
     super()
   }
-
-  preload () {
-    this.load.image('logo', logoImg)
-  }
     
   create () {
-    const logo = this.add.image(400, 150, 'logo')
+    const characterRefs = []
 
-    logo.setInteractive() // Track this object
-    
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1
-    })
+    for (let i = 0; i < 1000; i++) {
+      const character = gameCharacters(this)
+      character.setInteractive()
+      characterRefs.push(character)
+    }
+
+    console.log(characterRefs)
 
     this.input.on('gameobjectdown', this.onObjectClicked)
   }
 
   onObjectClicked(pointer, gameObject) {
-    gameObject.angle += 10
+    gameObject.x += 10
   }
 }
 
