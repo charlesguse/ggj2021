@@ -11,12 +11,6 @@ export default class Preloader extends Phaser.Scene {
     const atlas = require("./assets/images/genericItems_spritesheet_colored.xml");
     this.load.atlasXML("game-items", images, atlas);
 
-    var logoEnclave = this.add.sprite(
-      EPT.world.centerX,
-      EPT.world.centerY - 100,
-      "logo-enclave"
-    );
-    logoEnclave.setOrigin(0.5, 0.5);
     var loadingBg = this.add.sprite(
       EPT.world.centerX,
       EPT.world.centerY + 100,
