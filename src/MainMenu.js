@@ -120,41 +120,28 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   clickSettings() {
-    console.log('settings 1')
     if (this.bgFilesLoaded) {
-      console.log('settings 2')
       EPT.Sfx.play("click");
-      console.log('settings 3')
       if (this.loadImage) {
-        console.log('settings 4')
         this.loadImage.destroy();
       }
-      console.log('settings 5')
       EPT.fadeOutScene("Settings", this);
-      console.log('settings 6')
     } else {
-      console.log('settings 8')
       var animationFrames = this.anims.generateFrameNumbers("loader");
-      console.log('settings 9')
       animationFrames.pop();
-      console.log('settings 10')
       this.waitingForSettings = true;
-      console.log('settings 11')
       this.buttonSettings.setAlpha(0.1);
-      console.log('settings 12')
       var loadAnimation = this.anims.create({
         key: "loading",
         frames: animationFrames,
         frameRate: 12,
         repeat: -1,
       });
-      console.log('settings 13')
       this.loadImage = this.add
       .sprite(30, 30, "loader")
       .setOrigin(0, 0)
       .setScale(1.25);
       this.loadImage.play("loading");
-      console.log('settings 14')
     }
   }
 
@@ -191,96 +178,96 @@ export default class MainMenu extends Phaser.Scene {
   }
   
   addFiles() {
-    var resources = {
-      image: [
-        ["overlay", require("./assets/images/overlay.png")],
-        ["particle", require("./assets/images/particle.png")],
-      ],
-      spritesheet: [
-        [
-          "button-continue",
-          require("./assets/images/button-continue.png"),
-          { frameWidth: 180, frameHeight: 180 },
-        ],
-        [
-          "button-mainmenu",
-          require("./assets/images/button-mainmenu.png"),
-          { frameWidth: 180, frameHeight: 180 },
-        ],
-        [
-          "button-restart",
-          require("./assets/images/button-tryagain.png"),
-          { frameWidth: 180, frameHeight: 180 },
-        ],
-        [
-          "button-pause",
-          require("./assets/images/button-pause.png"),
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-sound-on",
-          require("./assets/images/button-sound-on.png"),
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-sound-off",
-          require("./assets/images/button-sound-off.png"),
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-music-on",
-          require("./assets/images/button-music-on.png"),
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-music-off",
-          require("./assets/images/button-music-off.png"),
-          { frameWidth: 80, frameHeight: 80 },
-        ],
-        [
-          "button-back",
-          require("./assets/images/button-back.png"),
-          { frameWidth: 70, frameHeight: 70 },
-        ],
-      ],
-      audio: [
-        [
-          "sound-click",
-          [
-            "sfx/audio-button.m4a",
-            "sfx/audio-button.mp3",
-            "sfx/audio-button.ogg",
-          ],
-        ],
-        [
-          "music-theme",
-          [
-            "sfx/music-bitsnbites-liver.m4a",
-            "sfx/music-bitsnbites-liver.mp3",
-            "sfx/music-bitsnbites-liver.ogg",
-          ],
-        ],
-      ],
-    };
-    for (var method in resources) {
-      resources[method].forEach(function (args) {
-        var loader = this.load[method];
-        loader && loader.apply(this.load, args);
-      }, this);
-    }
-    this.load.on(
-      "complete",
-      function () {
+    console.log('bg 4')
+
+    // var resources = {
+    //   image: [
+    //     // ["overlay", require("./assets/images/overlay.png")],
+    //     // ["particle", require("./assets/images/particle.png")],
+    //   ],
+    //   spritesheet: [
+    //     // [
+    //     //   "button-continue",
+    //     //   require("./assets/images/button-continue.png"),
+    //     //   { frameWidth: 180, frameHeight: 180 },
+    //     // ],
+    //     [
+    //       // "button-mainmenu",
+    //       // require("./assets/images/button-mainmenu.png"),
+    //       // { frameWidth: 180, frameHeight: 180 },
+    //     ],
+    //     [
+    //       // "button-restart",
+    //       // require("./assets/images/button-tryagain.png"),
+    //       // { frameWidth: 180, frameHeight: 180 },
+    //     ],
+    //     [
+    //       // "button-pause",
+    //       // require("./assets/images/button-pause.png"),
+    //       // { frameWidth: 80, frameHeight: 80 },
+    //     ],
+    //     [
+    //       // "button-sound-on",
+    //       // require("./assets/images/button-sound-on.png"),
+    //       // { frameWidth: 80, frameHeight: 80 },
+    //     ],
+    //     [
+    //       // "button-sound-off",
+    //       // require("./assets/images/button-sound-off.png"),
+    //       // { frameWidth: 80, frameHeight: 80 },
+    //     ],
+    //     [
+    //       // "button-music-on",
+    //       // require("./assets/images/button-music-on.png"),
+    //       // { frameWidth: 80, frameHeight: 80 },
+    //     ],
+    //     [
+    //       // "button-music-off",
+    //       // require("./assets/images/button-music-off.png"),
+    //       // { frameWidth: 80, frameHeight: 80 },
+    //     ],
+    //     [
+    //       // "button-back",
+    //       // require("./assets/images/button-back.png"),
+    //       // { frameWidth: 70, frameHeight: 70 },
+    //     ],
+    //   ],
+    //   audio: [
+    //     [
+    //       "sound-click",
+    //       [
+    //         require("./assets/sounds/audio-button.m4a"),
+    //         require("./assets/sounds/audio-button.mp3"),
+    //         require("./assets/sounds/audio-button.ogg"),
+    //       ],
+    //     ],
+    //     [
+    //       "music-theme",
+    //       [
+    //         require("./assets/sounds/music-bitsnbites-liver.m4a"),
+    //         require("./assets/sounds/music-bitsnbites-liver.mp3"),
+    //         require("./assets/sounds/music-bitsnbites-liver.ogg"),
+    //       ],
+    //     ],
+    //   ],
+    // };
+
+    console.log('bg 5')
+
+    // for (var method in resources) {
+    //   resources[method].forEach(function (args) {
+    //     var loader = this.load[method];
+    //     loader && loader.apply(this.load, args);
+    //   }, this);
+    // }
+
+    this.load.on("complete", () => {
         console.log("[EPT] All files loaded in the background.");
         this.bgFilesLoaded = true;
         EPT.Sfx.manage("music", "init", this);
         EPT.Sfx.manage("sound", "init", this);
-        if (this.waitingForSettings) {
-          this.clickSettings();
-        }
-        if (this.waitingForStart) {
-          this.clickStart();
-        }
+        if (this.waitingForSettings) this.clickSettings()
+        if (this.waitingForStart) this.clickStart()
       },
       this
     );
