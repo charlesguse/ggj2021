@@ -174,7 +174,9 @@ export default class MainMenu extends Phaser.Scene {
   startPreloadInTheBackground() {
     console.log("[EPT] Starting background loading...");
     this.load.once("filecomplete", this.addFiles, this);
+    console.log('bg loading 1')
     this.load.start();
+    console.log('bg loading 2')
   }
   
   addFiles() {
