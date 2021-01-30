@@ -1,29 +1,33 @@
 import Phaser from 'phaser';
-import { gameCharacters } from './gameBoardCharacters'
+
+import { randomX, randomY } from './utils'
 
 export default class MyGame extends Phaser.Scene {
-  constructor () {
-    super('MyGame');
+  constructor() {
+    super()
   }
-    
-  create () {
-    const characterRefs = []
 
-    for (let i = 0; i < 1000; i++) {
-      const character = gameCharacters(this)
-      character.setInteractive()
-      characterRefs.push(character)
+  preload() {
+    const images = require('./assets/images/genericItems_spritesheet_colored.png')
+    const atlas = require('./assets/images/genericItems_spritesheet_colored.xml')
+    this.load.atlasXML('items', images, atlas)
+  }
+
+  create() {
+    const atlasTextures = this.textures.get('items')
+    const frames = atlasTextures.getFrameNames()
+
+    for (var i = 0; i < frames.length; i++) {
+      const imgRef = this.add.image(randomX(), randomY(), 'items', frames[i])
+      imgRef.setInteractive()
     }
-
-    console.log(characterRefs)
 
     this.input.on('gameobjectdown', this.onObjectClicked)
   }
 
   onObjectClicked(pointer, gameObject) {
-    gameObject.x += 10
+    gameObject.angle += 15
   }
-}
 
 // const config = {
 //   type: Phaser.AUTO,
