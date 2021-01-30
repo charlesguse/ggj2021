@@ -9,7 +9,6 @@ jobs:
     name: Publish to S3
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - uses: actions/checkout@v2
       - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
