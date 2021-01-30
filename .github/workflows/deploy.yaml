@@ -1,0 +1,40 @@
+name: Deploy the game
+
+on: [push]
+
+jobs:
+  deploy:
+    env:
+        AWS_CFN_STACK_NAME: ggj2021
+    name: Publish to S3
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+        uses: actions/setup-node@v2
+      - name: Install node_modules
+        run: npm ci
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: $AWS_CFN_STACK_NAME
+          template: template.yaml
+          # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
+      - name: Build Assets
+        run: npm run build
+      - name: Deploy Assets
+        run: |
+          S3URI=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='SourceS3Uri'].OutputValue" --output text)
+          aws s3 sync ./dist ${S3URI}
+      - name: Deploy Assets
+        run: |
+          URL=$(aws cloudformation describe-stacks --stack-name ${AWS_CFN_STACK_NAME} --query "Stacks[*].Outputs[?OutputKey=='FrontendUrl'].OutputValue" --output text)
+          echo $URL
