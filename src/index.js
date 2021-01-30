@@ -5,7 +5,6 @@ import MainMenu from './MainMenu'
 import Settings from './Settings'
 import Story from './Story'
 import Game from './Game'
-import MyGame from './MyGame'
 
 var enablePWA = false;
 if(enablePWA) {
@@ -20,7 +19,7 @@ if(enablePWA) {
 		}
 	});
 	function exampleNotification() {
-		var notifTitle = 'Enclave Phaser Template';
+		var notifTitle = 'GGJ 2021 Find Me!';
 		var notifBody = 'Created by the Enclave Games team.';
 		var notifImg = 'img/icons/icon-512.png';
 		var options = {

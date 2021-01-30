@@ -1,55 +1,83 @@
 import Phaser from "phaser";
-import EPT, { randomX, randomY, randomIntegarInRange } from "./utils";
+import EPT from "./utils";
+import { splashRandomX, splashRandomY, randomIntegarInRange } from './game-utils'
 import { Button } from "./utils";
-import bgImage from "./assets/images/bg_wood.png";
 
 export default class Game extends Phaser.Scene {
   constructor() {
     super("Game");
   }
 
-  preload() {
-    this.load.image("background", bgImage);
-
-    const images = require("./assets/images/genericItems_spritesheet_colored.png");
-    const atlas = require("./assets/images/genericItems_spritesheet_colored.xml");
-
-    this.load.atlasXML("items", images, atlas);
-  }
-
   create() {
-    this.add.sprite(0, 0, "background").setOrigin(0, 0);
+    // Display background
+    const bg = this.add.tileSprite(
+      0,
+      0,
+      EPT.world.width,
+      EPT.world.height,
+      "background"
+    );
+    bg.setOrigin(0, 0);
+    
+    // Render all the junk falling onto the screen
+    const atlasTextures = this.textures.get("game-items");
+    const frames = atlasTextures.getFrameNames();
+
+    for (let i = 0; i < frames.length; i++) {
+      const imgRef = this.add.image(
+        EPT.world.width / 2,
+        EPT.world.height / 2,
+        "game-items",
+        frames[i]
+      );
+
+      this.tweens.add({
+        targets: imgRef,
+        x: splashRandomX() -25,
+        y: splashRandomY() -25,
+        duration: 400,
+        ease: "Circ.easeOut",
+        yoyo: false,
+        rotation: randomIntegarInRange(-5, 5),
+      });
+
+      imgRef.setInteractive();
+    }
+
+    this.input.on("gameobjectdown", this.onObjectClicked);
+
     this.stateStatus = null;
     this._score = 0;
     this._time = 10;
     this._gamePaused = false;
     this._runOnce = false;
 
-    this.buttonDummy = new Button(
-      EPT.world.centerX,
-      EPT.world.centerY,
-      "clickme",
-      this.addPoints,
-      this,
-      "static"
-    );
-    this.buttonDummy.setOrigin(0.5, 0.5);
-    this.buttonDummy.setAlpha(0);
-    this.buttonDummy.setScale(0.1);
-    this.tweens.add({
-      targets: this.buttonDummy,
-      alpha: 1,
-      duration: 500,
-      ease: "Linear",
-    });
-    this.tweens.add({
-      targets: this.buttonDummy,
-      scale: 1,
-      duration: 500,
-      ease: "Back",
-    });
+    // this.buttonDummy = new Button(
+    //   EPT.world.centerX,
+    //   EPT.world.centerY,
+    //   "clickme",
+    //   this.addPoints,
+    //   this,
+    //   "static"
+    // );
+    // this.buttonDummy.setOrigin(0.5, 0.5);
+    // this.buttonDummy.setAlpha(0);
+    // this.buttonDummy.setScale(0.1);
+    // this.tweens.add({
+    //   targets: this.buttonDummy,
+    //   alpha: 1,
+    //   duration: 500,
+    //   ease: "Linear",
+    // });
+    // this.tweens.add({
+    //   targets: this.buttonDummy,
+    //   scale: 1,
+    //   duration: 500,
+    //   ease: "Back",
+    // });
 
     this.initUI();
+
     this.currentTimer = this.time.addEvent({
       delay: 1000,
       callback: function () {
@@ -64,50 +92,8 @@ export default class Game extends Phaser.Scene {
       loop: true,
     });
 
-    this.input.keyboard.on("keydown", this.handleKey, this);
     this.cameras.main.fadeIn(250);
     this.stateStatus = "playing";
-
-    // ---------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------
-
-    // Display background
-    this.add.tileSprite(
-      0,
-      0,
-      window.innerWidth * 2,
-      window.innerHeight * 2,
-      "background"
-    );
-
-    const atlasTextures = this.textures.get("items");
-    const frames = atlasTextures.getFrameNames();
-
-    // Render all the junk falling onto the screen
-    for (let i = 0; i < frames.length; i++) {
-      const imgRef = this.add.image(
-        window.innerWidth / 2,
-        window.innerHeight / 2,
-        "items",
-        frames[i]
-      );
-
-      this.tweens.add({
-        targets: imgRef,
-        x: randomX(),
-        y: randomY(),
-        duration: 400,
-        ease: "Circ.easeOut",
-        yoyo: false,
-        rotation: randomIntegarInRange(-5, 5),
-      });
-
-      imgRef.setInteractive();
-    }
-
-    // INPUTS
-    this.input.on("gameobjectdown", this.onObjectClicked);
   }
 
   onObjectClicked(pointer, gameObject) {
@@ -138,37 +124,14 @@ export default class Game extends Phaser.Scene {
     }
   }
 
-  handleKey(e) {
-    switch (e.code) {
-      case "Enter": {
-        this.addPoints();
-        break;
-      }
-      case "KeyP": {
-        this.managePause();
-        break;
-      }
-      case "KeyB": {
-        this.stateBack();
-        break;
-      }
-      case "KeyT": {
-        this.stateRestart();
-        break;
-      }
-      default: {
-      }
-    }
-  }
-
   managePause() {
     this._gamePaused = !this._gamePaused;
     this.currentTimer.paused = !this.currentTimer.paused;
     EPT.Sfx.play("click");
     if (this._gamePaused) {
       EPT.fadeOutIn(function (self) {
-        self.buttonPause.input.enabled = false;
-        self.buttonDummy.input.enabled = false;
+        // self.buttonPause.input.enabled = false;
+        // self.buttonDummy.input.enabled = false;
         self.stateStatus = "paused";
         self._runOnce = false;
       }, this);
@@ -191,8 +154,8 @@ export default class Game extends Phaser.Scene {
       });
     } else {
       EPT.fadeOutIn(function (self) {
-        self.buttonPause.input.enabled = true;
-        self.buttonDummy.input.enabled = true;
+        // self.buttonPause.input.enabled = true;
+        // self.buttonDummy.input.enabled = true;
         self._stateStatus = "playing";
         self._runOnce = false;
       }, this);
@@ -229,8 +192,8 @@ export default class Game extends Phaser.Scene {
     EPT.Storage.setHighscore("EPT-highscore", this._score);
     EPT.fadeOutIn(function (self) {
       self.screenGameoverGroup.toggleVisible();
-      self.buttonPause.input.enabled = false;
-      self.buttonDummy.input.enabled = false;
+      // self.buttonPause.input.enabled = false;
+      // self.buttonDummy.input.enabled = false;
       self.screenGameoverScore.setText(
         EPT.text["gameplay-score"] + self._score
       );
@@ -254,6 +217,7 @@ export default class Game extends Phaser.Scene {
       ease: "Back",
     });
   }
+
   initUI() {
     this.buttonPause = new Button(
       20,
@@ -398,6 +362,7 @@ export default class Game extends Phaser.Scene {
     this.screenGameoverGroup.add(this.screenGameoverScore);
     this.screenGameoverGroup.toggleVisible();
   }
+
   addPoints() {
     this._score += 10;
     this.textScore.setText(EPT.text["gameplay-score"] + this._score);
@@ -421,14 +386,17 @@ export default class Game extends Phaser.Scene {
 
     this.cameras.main.shake(100, 0.01, true);
   }
+
   stateRestart() {
     EPT.Sfx.play("click");
     EPT.fadeOutScene("Game", this);
   }
+
   stateBack() {
     EPT.Sfx.play("click");
     EPT.fadeOutScene("MainMenu", this);
   }
+
   gameoverScoreTween() {
     this.screenGameoverScore.setText(EPT.text["gameplay-score"] + "0");
     if (this._score) {
