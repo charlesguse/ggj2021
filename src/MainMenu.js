@@ -21,8 +21,6 @@ export default class MainMenu extends Phaser.Scene {
     EPT.Storage.initUnset("EPT-highscore", 0);
     var highscore = EPT.Storage.get("EPT-highscore");
 
-    this.waitingForSettings = false;
-
     /**
      * Story Text
      */
@@ -45,15 +43,6 @@ export default class MainMenu extends Phaser.Scene {
       loop: -1,
       delay: 1000,
     });
-
-    this.buttonSettings = new Button(
-      20,
-      20,
-      "button-settings",
-      this.clickSettings,
-      this
-    );
-    this.buttonSettings.setOrigin(0, 0);
 
     this.buttonStart = new Button(
       EPT.world.width - 20,
@@ -86,14 +75,6 @@ export default class MainMenu extends Phaser.Scene {
       ease: "Back",
     });
 
-    this.buttonSettings.y = -this.buttonSettings.height - 20;
-    this.tweens.add({
-      targets: this.buttonSettings,
-      y: 20,
-      duration: 500,
-      ease: "Back",
-    });
-
     textHighscore.y = -textHighscore.height - 30;
     this.tweens.add({
       targets: textHighscore,
@@ -104,172 +85,14 @@ export default class MainMenu extends Phaser.Scene {
     });
 
     this.cameras.main.fadeIn(250);
-
-    if (!this.bgFilesLoaded) {
-      this.time.addEvent(
-        {
-          delay: 500,
-          callback: function () {
-            this.startPreloadInTheBackground();
-          },
-          callbackScope: this,
-        },
-        this
-      );
-    }
-  }
-
-  clickSettings() {
-    if (this.bgFilesLoaded) {
-      EPT.Sfx.play("click");
-      if (this.loadImage) {
-        this.loadImage.destroy();
-      }
-      EPT.fadeOutScene("Settings", this);
-    } else {
-      var animationFrames = this.anims.generateFrameNumbers("loader");
-      animationFrames.pop();
-      this.waitingForSettings = true;
-      this.buttonSettings.setAlpha(0.1);
-      var loadAnimation = this.anims.create({
-        key: "loading",
-        frames: animationFrames,
-        frameRate: 12,
-        repeat: -1,
-      });
-      this.loadImage = this.add
-      .sprite(30, 30, "loader")
-      .setOrigin(0, 0)
-      .setScale(1.25);
-      this.loadImage.play("loading");
-    }
   }
 
   clickStart() {
-    if (this.bgFilesLoaded) {
-      EPT.Sfx.play("click");
-      if (this.loadImage) {
-        this.loadImage.destroy();
-      }
-      EPT.fadeOutScene("Story", this);
-    } else {
-      var animationFrames = this.anims.generateFrameNumbers("loader");
-      animationFrames.pop();
-      this.waitingForStart = true;
-      this.buttonStart.setAlpha(0.1);
-      var loadAnimation = this.anims.create({
-        key: "loading",
-        frames: animationFrames,
-        frameRate: 12,
-        repeat: -1,
-      });
-      this.loadImage = this.add
-        .sprite(EPT.world.width - 85, EPT.world.height - 85, "loader")
-        .setOrigin(1, 1)
-        .setScale(1.25);
-      this.loadImage.play("loading");
-    }
-  }
+    const clickSound = this.sound.add('sound-click')
+    clickSound.play()
 
-  startPreloadInTheBackground() {
-    console.log("[EPT] Starting background loading...");
-    this.load.once("filecomplete", this.addFiles, this);
-    this.load.start();
-  }
-  
-  addFiles() {
-    console.log('bg 4')
+    if (this.loadImage) this.loadImage.destroy();
 
-    // var resources = {
-    //   image: [
-    //     // ["overlay", require("./assets/images/overlay.png")],
-    //     // ["particle", require("./assets/images/particle.png")],
-    //   ],
-    //   spritesheet: [
-    //     // [
-    //     //   "button-continue",
-    //     //   require("./assets/images/button-continue.png"),
-    //     //   { frameWidth: 180, frameHeight: 180 },
-    //     // ],
-    //     [
-    //       // "button-mainmenu",
-    //       // require("./assets/images/button-mainmenu.png"),
-    //       // { frameWidth: 180, frameHeight: 180 },
-    //     ],
-    //     [
-    //       // "button-restart",
-    //       // require("./assets/images/button-tryagain.png"),
-    //       // { frameWidth: 180, frameHeight: 180 },
-    //     ],
-    //     [
-    //       // "button-pause",
-    //       // require("./assets/images/button-pause.png"),
-    //       // { frameWidth: 80, frameHeight: 80 },
-    //     ],
-    //     [
-    //       // "button-sound-on",
-    //       // require("./assets/images/button-sound-on.png"),
-    //       // { frameWidth: 80, frameHeight: 80 },
-    //     ],
-    //     [
-    //       // "button-sound-off",
-    //       // require("./assets/images/button-sound-off.png"),
-    //       // { frameWidth: 80, frameHeight: 80 },
-    //     ],
-    //     [
-    //       // "button-music-on",
-    //       // require("./assets/images/button-music-on.png"),
-    //       // { frameWidth: 80, frameHeight: 80 },
-    //     ],
-    //     [
-    //       // "button-music-off",
-    //       // require("./assets/images/button-music-off.png"),
-    //       // { frameWidth: 80, frameHeight: 80 },
-    //     ],
-    //     [
-    //       // "button-back",
-    //       // require("./assets/images/button-back.png"),
-    //       // { frameWidth: 70, frameHeight: 70 },
-    //     ],
-    //   ],
-    //   audio: [
-    //     [
-    //       "sound-click",
-    //       [
-    //         require("./assets/sounds/audio-button.m4a"),
-    //         require("./assets/sounds/audio-button.mp3"),
-    //         require("./assets/sounds/audio-button.ogg"),
-    //       ],
-    //     ],
-    //     [
-    //       "music-theme",
-    //       [
-    //         require("./assets/sounds/music-bitsnbites-liver.m4a"),
-    //         require("./assets/sounds/music-bitsnbites-liver.mp3"),
-    //         require("./assets/sounds/music-bitsnbites-liver.ogg"),
-    //       ],
-    //     ],
-    //   ],
-    // };
-
-    console.log('bg 5')
-
-    // for (var method in resources) {
-    //   resources[method].forEach(function (args) {
-    //     var loader = this.load[method];
-    //     loader && loader.apply(this.load, args);
-    //   }, this);
-    // }
-
-    this.load.on("complete", () => {
-        console.log("[EPT] All files loaded in the background.");
-        this.bgFilesLoaded = true;
-        EPT.Sfx.manage("music", "init", this);
-        EPT.Sfx.manage("sound", "init", this);
-        if (this.waitingForSettings) this.clickSettings()
-        if (this.waitingForStart) this.clickStart()
-      },
-      this
-    );
+    EPT.fadeOutScene("Story", this);
   }
 }

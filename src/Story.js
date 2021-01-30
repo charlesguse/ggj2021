@@ -40,7 +40,9 @@ export default class Story extends Phaser.Scene {
   }
   
 	clickContinue() {
-		EPT.Sfx.play('click');
+    const clickSound = this.sound.add('sound-click')
+    clickSound.play()
+    
 		EPT.fadeOutScene('Game', this);
 	}
 };

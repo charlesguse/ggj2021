@@ -86,8 +86,8 @@ export default class Settings extends Phaser.Scene {
     );
     this.textMusic.setOrigin(0, 0.5);
 
-    EPT.Sfx.update("sound", this.buttonSound, this.textSound);
-    EPT.Sfx.update("music", this.buttonMusic, this.textMusic);
+    // EPT.Sfx.update("sound", this.buttonSound, this.textSound);
+    // EPT.Sfx.update("music", this.buttonMusic, this.textMusic);
 
     this.buttonSound.setScale(0.5);
     this.tweens.add({
