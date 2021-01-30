@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import EPT from './utils'
+import { Button } from './utils';
 
 export default class Settings extends Phaser.Scene {
     constructor() {

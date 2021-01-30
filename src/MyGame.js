@@ -28,7 +28,7 @@ export default class MyGame extends Phaser.Scene {
   onObjectClicked(pointer, gameObject) {
     gameObject.angle += 15
   }
-
+}
 // const config = {
 //   type: Phaser.AUTO,
 //   scale: {
