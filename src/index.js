@@ -4,7 +4,6 @@ import Preloader from './Preloader'
 import MainMenu from './MainMenu'
 import Story from './Story'
 import Game from './Game'
-import WinScreen from './WinScreen'
 
 var gameConfig = {
 	scale: {
@@ -14,7 +13,7 @@ var gameConfig = {
 		width: 640,
 		height: 960
 	},
-	scene: [Boot, Preloader, MainMenu, Story, Game, WinScreen]
+	scene: [Boot, Preloader, MainMenu, Story, Game]
 }
 const game = new Phaser.Game(gameConfig);
 window.focus();
