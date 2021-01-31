@@ -223,13 +223,13 @@ export default class Game extends Phaser.Scene {
     this.buttonPause.setOrigin(0, 0);
 
     var fontScore = {
-      font: "38px " + EPT.text["FONT"],
+      font: EPT.text["FONT-SIZE"] + " " + EPT.text["FONT"],
       fill: "#ffde00",
       stroke: "#000",
       strokeThickness: 5,
     };
     var fontScoreWhite = {
-      font: "38px " + EPT.text["FONT"],
+      font: EPT.text["FONT-SIZE"] + " " + EPT.text["FONT"],
       fill: "#000",
       stroke: "#ffde00",
       strokeThickness: 5,

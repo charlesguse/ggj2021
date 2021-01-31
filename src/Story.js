@@ -18,7 +18,7 @@ export default class Story extends Phaser.Scene {
     );
     bg.setOrigin(0, 0);
 
-    const fontStory = { font: '48px '+EPT.text['FONT'], fill: '#ffde00', stroke: '#000', strokeThickness: 7, align: 'center' };
+    const fontStory = { font: EPT.text['FONT-SIZE'] + ' ' +EPT.text['FONT'], fill: '#ffde00', stroke: '#000', strokeThickness: 7, align: 'center' };
     
     /**
      * Story Text
