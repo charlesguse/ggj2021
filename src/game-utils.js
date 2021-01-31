@@ -1,11 +1,11 @@
 import EPT from './utils'
 
 export function splashRandomX() {
-  return randomIntegarInRange(75, EPT.world.width - 50)
+  return randomIntegarInRange(75, EPT.world.width - 25)
 }
 
 export function splashRandomY() {
-  return randomIntegarInRange(140, EPT.world.height - 60)
+  return randomIntegarInRange(150, EPT.world.height - 125)
 }
 
 export function randomColor() {
