@@ -23,7 +23,7 @@ export default class Game extends Phaser.Scene {
       "background"
     );
     bg.setOrigin(0, 0);
-    
+
     // Render all the junk falling onto the screen
     const atlasTextures = this.textures.get("game-items");
     const frames = atlasTextures.getFrameNames();
@@ -40,8 +40,8 @@ export default class Game extends Phaser.Scene {
 
       this.tweens.add({
         targets: imgRef,
-        x: splashRandomX() -25,
-        y: splashRandomY() -25,
+        x: splashRandomX() - 25,
+        y: splashRandomY() - 25,
         duration: 400,
         ease: "Circ.easeOut",
         yoyo: false,
@@ -55,11 +55,16 @@ export default class Game extends Phaser.Scene {
 
     imgRefs.map((i) => i.setInteractive())
 
+    this.add.sprite(
+      EPT.world.centerX - 60,
+      EPT.world.centerY - 60,
+      "selection-frame"
+    );
     this.add.image(
-      EPT.world.width - 50,
-      EPT.world.height - 50,
+      EPT.world.width - 60,
+      EPT.world.height - 60,
       "game-items",
-      frames[selectedItemIndex])
+      frames[selectedItemIndex]);
 
     this.input.on("gameobjectdown", this.onObjectClicked);
 
