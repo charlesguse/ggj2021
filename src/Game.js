@@ -48,7 +48,7 @@ export default class Game extends Phaser.Scene {
 
     this.stateStatus = null;
     this._score = 0;
-    this._time = 10;
+    this._time = 0;
     this._gamePaused = false;
     this._runOnce = false;
 
@@ -57,12 +57,12 @@ export default class Game extends Phaser.Scene {
     this.currentTimer = this.time.addEvent({
       delay: 1000,
       callback: function () {
-        this._time--;
+        this._time++;
         this.textTime.setText(EPT.text["gameplay-timeleft"] + this._time);
-        if (!this._time) {
-          this._runOnce = false;
-          this.stateStatus = "gameover";
-        }
+        // if (!this._time) {
+        //   this._runOnce = false;
+        //   this.stateStatus = "gameover";
+        // }
       },
       callbackScope: this,
       loop: true,
