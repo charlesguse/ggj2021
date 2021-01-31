@@ -5,6 +5,8 @@ import { Button } from "./utils";
 
 let scene = null
 const imgRefs = []
+let selectedItemIndex = null
+let selectedItem = null
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -47,7 +49,17 @@ export default class Game extends Phaser.Scene {
       });
     }
 
+    selectedItemIndex = randomIntegarInRange(0, imgRefs.length)
+    selectedItem = imgRefs[selectedItemIndex].frame.name
+    console.log('ITEM TO FIND:', selectedItem)
+
     imgRefs.map((i) => i.setInteractive())
+
+    this.add.image(
+      EPT.world.width - 50,
+      EPT.world.height - 50,
+      "game-items",
+      frames[selectedItemIndex])
 
     this.input.on("gameobjectdown", this.onObjectClicked);
 
@@ -80,6 +92,11 @@ export default class Game extends Phaser.Scene {
   }
 
   onObjectClicked(pointer, gameObject) {
+    if (gameObject.frame.name === selectedItem) {
+      gameObject.destroy()
+      EPT.fadeOutScene('WinScreen', this);
+    }
+
     const ranX = randomIntegarInRange(-50, 50)
     const ranY = randomIntegarInRange(20, 40)
     const ranRot = randomIntegarInRange(-0.25, 0.25)
