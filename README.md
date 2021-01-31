@@ -4,18 +4,9 @@ https://ggj2021.charlieguse.com
 
 Game for South Bend Global Game Jam 2021 made by Michael J and Charlie G.
 
-## Todo
+## To Play
 
-- Win conditions
-
-  - Who/what do you have to find to win the game?
-  - Basic win screen
-  - Maybe include timer of how long it took?
-
-- Menu screen
-
-  - Basic menu screen that explains the game
-  - Start button to begin the game
+Run `npm install` in the terminal, then `npm run start` to launch it.
 
 ## Phaser 3 Webpack Project Template
 
