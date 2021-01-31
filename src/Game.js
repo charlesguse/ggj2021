@@ -3,6 +3,9 @@ import EPT from "./utils";
 import { splashRandomX, splashRandomY, randomIntegarInRange } from './game-utils'
 import { Button } from "./utils";
 
+let scene = null
+const imgRefs = []
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super("Game");
@@ -31,6 +34,8 @@ export default class Game extends Phaser.Scene {
         frames[i]
       );
 
+      imgRefs.push(imgRef)
+
       this.tweens.add({
         targets: imgRef,
         x: splashRandomX() -25,
@@ -40,9 +45,9 @@ export default class Game extends Phaser.Scene {
         yoyo: false,
         rotation: randomIntegarInRange(-5, 5),
       });
-
-      imgRef.setInteractive();
     }
+
+    imgRefs.map((i) => i.setInteractive())
 
     this.input.on("gameobjectdown", this.onObjectClicked);
 
@@ -70,10 +75,24 @@ export default class Game extends Phaser.Scene {
 
     this.cameras.main.fadeIn(250);
     this.stateStatus = "playing";
+
+    scene = this
   }
 
   onObjectClicked(pointer, gameObject) {
-    gameObject.angle += 15;
+    const ranX = randomIntegarInRange(-50, 50)
+    const ranY = randomIntegarInRange(20, 40)
+    const ranRot = randomIntegarInRange(-0.25, 0.25)
+
+    scene.tweens.add({
+      targets: gameObject,
+      x: gameObject.x += ranX,
+      y: gameObject.y += ranY,
+      duration: 300,
+      ease: "Circ.easeOut",
+      yoyo: false,
+      rotation: ranRot,
+    });
   }
 
   update() {
