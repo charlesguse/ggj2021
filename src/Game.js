@@ -99,22 +99,9 @@ export default class Game extends Phaser.Scene {
   onObjectClicked(pointer, gameObject) {
     if (gameObject.frame.name === selectedItem) {
       gameObject.destroy()
-      EPT.fadeOutScene('WinScreen', this);
+      EPT.fadeOutIn('MainMenu', scene);
     }
-
-    const ranX = randomIntegarInRange(-50, 50)
-    const ranY = randomIntegarInRange(20, 40)
-    const ranRot = randomIntegarInRange(-0.25, 0.25)
-
-    scene.tweens.add({
-      targets: gameObject,
-      x: gameObject.x += ranX,
-      y: gameObject.y += ranY,
-      duration: 300,
-      ease: "Circ.easeOut",
-      yoyo: false,
-      rotation: ranRot,
-    });
+    gameObject.destroy()
   }
 
   update() {
