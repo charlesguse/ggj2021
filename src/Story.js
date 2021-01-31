@@ -23,7 +23,7 @@ export default class Story extends Phaser.Scene {
     /**
      * Story Text
      */
-    const storyText = 'You must collect all the items!'
+    const storyText = EPT.text['story-instructions'];
 		const textStory = this.add.text(EPT.world.centerX, 200, storyText, fontStory);
     textStory.setOrigin(0.5,0);
 
