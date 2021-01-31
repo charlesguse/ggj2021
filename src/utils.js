@@ -229,7 +229,7 @@ EPT.Lang = {
     'en': {
       'FONT': 'cursive',
       'FONT-SIZE': '36px',
-      'story-instructions': 'You must collect all the items!',
+      'story-instructions': 'You must find the correct item!',
       'gameplay-score': 'Score: ',
       'gameplay-timeleft': 'Time: ',
       'gameplay-paused': 'PAUSED',

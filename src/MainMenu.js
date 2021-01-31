@@ -18,9 +18,6 @@ export default class MainMenu extends Phaser.Scene {
     );
     bg.setOrigin(0, 0);
 
-    EPT.Storage.initUnset("EPT-highscore", 0);
-    var highscore = EPT.Storage.get("EPT-highscore");
-
     /**
      * Story Text
      */
@@ -52,37 +49,6 @@ export default class MainMenu extends Phaser.Scene {
       this
     );
     this.buttonStart.setOrigin(1, 1);
-
-    var fontHighscore = {
-      font: "38px " + EPT.text["FONT"],
-      fill: "#ffde00",
-      stroke: "#000",
-      strokeThickness: 5,
-    };
-    var textHighscore = this.add.text(
-      EPT.world.width - 30,
-      60,
-      EPT.text["menu-highscore"] + highscore,
-      fontHighscore
-    );
-    textHighscore.setOrigin(1, 0);
-
-    this.buttonStart.x = EPT.world.width + this.buttonStart.width + 20;
-    this.tweens.add({
-      targets: this.buttonStart,
-      x: EPT.world.width - 20,
-      duration: 500,
-      ease: "Back",
-    });
-
-    textHighscore.y = -textHighscore.height - 30;
-    this.tweens.add({
-      targets: textHighscore,
-      y: 40,
-      duration: 500,
-      delay: 100,
-      ease: "Back",
-    });
 
     this.cameras.main.fadeIn(250);
   }

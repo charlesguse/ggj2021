@@ -60,12 +60,14 @@ export default class Game extends Phaser.Scene {
       "selection-frame",
     );
     selectionBox.setScale(2.5)
+    selectionBox.setTint(0xE2FAFF);
 
     this.add.image(
       EPT.world.width - 60,
       EPT.world.height - 60,
       "game-items",
-      frames[selectedItemIndex]);
+      frames[selectedItemIndex]
+    );
 
     this.input.on("gameobjectdown", this.onObjectClicked);
 
@@ -100,8 +102,10 @@ export default class Game extends Phaser.Scene {
   onObjectClicked(pointer, gameObject) {
     if (gameObject.frame.name === selectedItem) {
       gameObject.destroy()
-      EPT.fadeOutIn('MainMenu', scene);
+      scene.stateStatus = "gameover";
+      // EPT.fadeOutScene("MainMenu", scene);
     }
+
     gameObject.destroy()
   }
 
@@ -160,8 +164,6 @@ export default class Game extends Phaser.Scene {
       });
     } else {
       EPT.fadeOutIn(function (self) {
-        // self.buttonPause.input.enabled = true;
-        // self.buttonDummy.input.enabled = true;
         self._stateStatus = "playing";
         self._runOnce = false;
       }, this);
@@ -223,15 +225,6 @@ export default class Game extends Phaser.Scene {
   }
 
   initUI() {
-    this.buttonPause = new Button(
-      20,
-      20,
-      "button-pause",
-      this.managePause,
-      this
-    );
-    this.buttonPause.setOrigin(0, 0);
-
     var fontScore = {
       font: EPT.text["FONT-SIZE"] + " " + EPT.text["FONT"],
       fill: "#ffde00",
@@ -273,14 +266,6 @@ export default class Game extends Phaser.Scene {
     this.tweens.add({
       targets: this.textTime,
       y: EPT.world.height - 30,
-      duration: 500,
-      ease: "Back",
-    });
-
-    this.buttonPause.y = -this.buttonPause.height - 20;
-    this.tweens.add({
-      targets: this.buttonPause,
-      y: 20,
       duration: 500,
       ease: "Back",
     });
