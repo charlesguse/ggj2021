@@ -173,10 +173,10 @@ export default class Game extends Phaser.Scene {
   }
 
   statePlaying() {
-    if (this._time === 0) {
-      this._runOnce = false;
-      this.stateStatus = "gameover";
-    }
+    // if (this._time === 0) {
+    //   this._runOnce = false;
+    //   this.stateStatus = "gameover";
+    // }
   }
 
   statePaused() {
