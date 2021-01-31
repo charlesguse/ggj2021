@@ -51,15 +51,16 @@ export default class Game extends Phaser.Scene {
 
     selectedItemIndex = randomIntegarInRange(0, imgRefs.length)
     selectedItem = imgRefs[selectedItemIndex].frame.name
-    console.log('ITEM TO FIND:', selectedItem)
 
     imgRefs.map((i) => i.setInteractive())
 
-    this.add.sprite(
-      EPT.world.centerX - 60,
-      EPT.world.centerY - 60,
-      "selection-frame"
+    const selectionBox = this.add.image(
+      EPT.world.width - 60,
+      EPT.world.height - 60,
+      "selection-frame",
     );
+    selectionBox.setScale(2.5)
+
     this.add.image(
       EPT.world.width - 60,
       EPT.world.height - 60,
